@@ -3,9 +3,9 @@ package teammates.test.pageobjects;
 import java.util.Stack;
 
 import org.openqa.selenium.WebDriver;
-
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import teammates.test.driver.TestProperties;
 
@@ -85,6 +85,14 @@ public class Browser {
             profile.setPreference("browser.download.dir", System.getProperty("java.io.tmpdir"));
             return new FirefoxDriver(profile);
 
+        } else if ("phantomjs".equals(browser)) {
+            System.out.println("Using PhantomJS.");
+            String phantomjsPath = TestProperties.inst().PHANTOMJS_PATH;
+            if (!phantomjsPath.isEmpty()) {
+                System.out.println("Custom path: " + phantomjsPath);
+                System.setProperty("phantomjs.binary.path", phantomjsPath);
+            }
+            return new PhantomJSDriver();
         }
         System.out.println("Using " + browser + " is not supported!");
         return null;
