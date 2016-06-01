@@ -3,7 +3,8 @@ package teammates.test.pageobjects;
 import java.util.Stack;
 
 import org.openqa.selenium.WebDriver;
-
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
@@ -85,6 +86,27 @@ public class Browser {
             profile.setPreference("browser.download.dir", System.getProperty("java.io.tmpdir"));
             return new FirefoxDriver(profile);
 
+        } else if ("chrome".equals(browser)) {
+            System.out.println("Using Chrome.");
+            String chromeDriverPath = TestProperties.CHROME_DRIVER_PATH;
+            System.out.println("Chrome Driver path: " + chromeDriverPath);
+            System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+
+            ChromeOptions options = new ChromeOptions();
+
+            String chromePath = TestProperties.CHROME_PATH;
+            if (!chromePath.isEmpty()) {
+                System.out.println("Custom Chrome path: " + chromePath);
+                options.setBinary(chromePath);
+            }
+
+            String chromeUserProfilePath = TestProperties.CHROME_USER_PROFILE_PATH;
+            if (!chromeUserProfilePath.isEmpty()) {
+                System.out.println("Custom Chrome User Profile path: " + chromeUserProfilePath);
+                options.addArguments("user-data-dir=" + chromeUserProfilePath);
+            }
+
+            return new ChromeDriver(options);
         }
         System.out.println("Using " + browser + " is not supported!");
         return null;
