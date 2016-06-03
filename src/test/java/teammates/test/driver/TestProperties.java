@@ -45,6 +45,9 @@ public final class TestProperties {
     public static final String BROWSER;
     public static final String FIREFOX_PATH;
     
+    public static final boolean IS_HEADLESS_FIREFOX;
+    public static final String XVFB_PORT;
+
     public static final int TEST_TIMEOUT;
 
     static {
@@ -82,6 +85,9 @@ public final class TestProperties {
             BROWSER = prop.getProperty("test.selenium.browser");
             FIREFOX_PATH = prop.getProperty("test.firefox.path");
             
+            IS_HEADLESS_FIREFOX = Boolean.parseBoolean(prop.getProperty("test.is_headless_firefox"));
+            XVFB_PORT = prop.getProperty("test.xvfb_port");
+
             TEST_TIMEOUT = Integer.parseInt(prop.getProperty("test.timeout"));
                     
         } catch (IOException | NumberFormatException e) {

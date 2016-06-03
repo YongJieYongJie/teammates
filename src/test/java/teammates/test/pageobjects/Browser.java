@@ -1,9 +1,11 @@
 package teammates.test.pageobjects;
 
+import java.io.File;
 import java.util.Stack;
 
 import org.openqa.selenium.WebDriver;
 
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
@@ -83,8 +85,16 @@ public class Browser {
             profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "text/csv,application/vnd.ms-excel");
             profile.setPreference("browser.download.folderList", 2);
             profile.setPreference("browser.download.dir", System.getProperty("java.io.tmpdir"));
-            return new FirefoxDriver(profile);
 
+            if (TestProperties.IS_HEADLESS_FIREFOX) {
+                System.out.println("Running Firefox in headless mode with Xvfb on display port "
+                                   + TestProperties.XVFB_PORT
+                                   + " (Xvfb must already be listening on that port)");
+                FirefoxBinary firefoxBinary = new FirefoxBinary(new File(firefoxPath));
+                firefoxBinary.setEnvironmentProperty("DISPLAY", TestProperties.XVFB_PORT);
+                return new FirefoxDriver(firefoxBinary, profile);
+            }
+            return new FirefoxDriver(profile);
         }
         System.out.println("Using " + browser + " is not supported!");
         return null;
