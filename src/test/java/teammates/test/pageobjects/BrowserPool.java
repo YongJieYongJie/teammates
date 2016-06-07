@@ -17,7 +17,7 @@ public final class BrowserPool {
     //+1 in case a sequential ui test uses a browser other than the first in pool
 
     private static BrowserPool instance;
-    private ArrayList<Browser> pool;
+    private static ArrayList<Browser> pool;
 
     private BrowserPool() {
         pool = new ArrayList<Browser>(CAPACITY);
@@ -104,6 +104,13 @@ public final class BrowserPool {
                     throw new RuntimeException(e);
                 }
             }
+        }
+    }
+
+    public static void closeAllBrowsers() {
+        for (Browser b : pool) {
+            b.driver.quit();
+            break;
         }
     }
 }

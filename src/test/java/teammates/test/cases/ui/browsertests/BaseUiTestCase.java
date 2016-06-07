@@ -3,6 +3,7 @@ package teammates.test.cases.ui.browsertests;
 import java.io.File;
 import java.io.IOException;
 
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import teammates.common.datatransfer.DataBundle;
@@ -15,6 +16,7 @@ import teammates.test.driver.TestProperties;
 import teammates.test.pageobjects.AdminHomePage;
 import teammates.test.pageobjects.AppPage;
 import teammates.test.pageobjects.Browser;
+import teammates.test.pageobjects.BrowserPool;
 import teammates.test.pageobjects.HomePage;
 import teammates.test.pageobjects.LoginPage;
 
@@ -32,6 +34,11 @@ public abstract class BaseUiTestCase extends BaseTestCase {
         if (isGodModeEnabled) {
             System.setProperty("godmode", "true");
         }
+    }
+
+    @AfterSuite
+    protected static void tearDown() {
+        BrowserPool.closeAllBrowsers();
     }
 
     /**
