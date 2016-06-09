@@ -80,6 +80,12 @@ public class Browser {
             // This method is used because Selenium cannot directly interact with the download dialog.
             // Taken from http://stackoverflow.com/questions/24852709
             FirefoxProfile profile = new FirefoxProfile();
+            profile.setPreference("app.update.auto", false);
+            profile.setPreference("app.update.enabled", false);
+            profile.setPreference("browser.search.update", false);
+            profile.setPreference("extensions.update.enabled", false);
+            profile.setPreference("extensions.update.notifyUser", false);
+            profile.setPreference("browser.reader.detectedFirstArticle", true);
             profile.setPreference("browser.download.panel.shown", false);
             profile.setPreference("browser.helperApps.neverAsk.openFile", "text/csv,application/vnd.ms-excel");
             profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "text/csv,application/vnd.ms-excel");
